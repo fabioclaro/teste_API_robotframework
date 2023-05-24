@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 6.0.2 (Python 3.10.6 on linux)" generated="20230524 16:30:37.989" rpa="false" schemaversion="3">
+<robot generator="Robot 6.0.2 (Python 3.10.6 on linux)" generated="20230524 17:39:06.320" rpa="false" schemaversion="3">
 <suite id="s1" name="Api Testing.Usuarios" source="/home/clarotunala/Projetos/CursoUdemy/RobotFramework/apiTesting/tests/api_testing.usuarios.robot">
 <test id="s1-t1" name="Cenário 01: Cadastrar um novo usuário com sucesso no ServeRest" line="7">
 <kw name="Criar um novo usuário" library="api_testing_usuarios">
@@ -8,33 +8,95 @@
 <arg>length=4</arg>
 <arg>chars=[LETTERS]</arg>
 <doc>Generates a string with a desired ``length`` from the given ``chars``.</doc>
-<msg timestamp="20230524 16:30:38.060" level="INFO">${palavra_aleatoria} = Mkyk</msg>
-<status status="PASS" starttime="20230524 16:30:38.060" endtime="20230524 16:30:38.060"/>
+<msg timestamp="20230524 17:39:06.988" level="INFO">${palavra_aleatoria} = OTar</msg>
+<status status="PASS" starttime="20230524 17:39:06.987" endtime="20230524 17:39:06.988"/>
 </kw>
 <kw name="Convert To Lower Case" library="String">
 <var>${palavra_aleatoria}</var>
 <arg>${palavra_aleatoria}</arg>
 <doc>Converts string to lower case.</doc>
-<msg timestamp="20230524 16:30:38.060" level="INFO">${palavra_aleatoria} = mkyk</msg>
-<status status="PASS" starttime="20230524 16:30:38.060" endtime="20230524 16:30:38.060"/>
+<msg timestamp="20230524 17:39:06.989" level="INFO">${palavra_aleatoria} = otar</msg>
+<status status="PASS" starttime="20230524 17:39:06.988" endtime="20230524 17:39:06.989"/>
 </kw>
 <kw name="Set Test Variable" library="BuiltIn">
 <arg>${EMAIL_TEST}</arg>
 <arg>${palavra_aleatoria}@emailteste.com</arg>
 <doc>Makes a variable available everywhere within the scope of the current test.</doc>
-<msg timestamp="20230524 16:30:38.062" level="INFO">${EMAIL_TEST} = mkyk@emailteste.com</msg>
-<status status="PASS" starttime="20230524 16:30:38.061" endtime="20230524 16:30:38.062"/>
+<msg timestamp="20230524 17:39:06.990" level="INFO">${EMAIL_TEST} = otar@emailteste.com</msg>
+<status status="PASS" starttime="20230524 17:39:06.989" endtime="20230524 17:39:06.990"/>
 </kw>
 <kw name="Log To Console" library="BuiltIn">
 <arg>${EMAIL_TEST}</arg>
 <doc>Logs the given message to the console.</doc>
-<status status="PASS" starttime="20230524 16:30:38.062" endtime="20230524 16:30:38.062"/>
+<status status="PASS" starttime="20230524 17:39:06.990" endtime="20230524 17:39:06.991"/>
 </kw>
-<status status="PASS" starttime="20230524 16:30:38.059" endtime="20230524 16:30:38.062"/>
+<status status="PASS" starttime="20230524 17:39:06.986" endtime="20230524 17:39:06.991"/>
 </kw>
-<status status="PASS" starttime="20230524 16:30:38.059" endtime="20230524 16:30:38.062"/>
+<kw name="Cadastrar o usuário criado no ServeRest" library="api_testing_usuarios">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${bory}</var>
+<arg>nome=Tifulano da Silva</arg>
+<arg>email=${EMAIL_TEST}</arg>
+<arg>password=1234</arg>
+<arg>administrador=true</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230524 17:39:06.992" level="INFO">${bory} = {'nome': 'Tifulano da Silva', 'email': 'otar@emailteste.com', 'password': '1234', 'administrador': 'true'}</msg>
+<status status="PASS" starttime="20230524 17:39:06.991" endtime="20230524 17:39:06.992"/>
+</kw>
+<kw name="Criar sessão na ServeRest" library="api_testing_usuarios">
+<kw name="Create Dictionary" library="BuiltIn">
+<var>${headers}</var>
+<arg>accept=application/json</arg>
+<arg>Content-Type=application/json</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<msg timestamp="20230524 17:39:06.992" level="INFO">${headers} = {'accept': 'application/json', 'Content-Type': 'application/json'}</msg>
+<status status="PASS" starttime="20230524 17:39:06.992" endtime="20230524 17:39:06.992"/>
+</kw>
+<kw name="Create Session" library="RequestsLibrary">
+<arg>alias=ServeRest</arg>
+<arg>url=https://serverest.dev</arg>
+<arg>headers=${headers}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<msg timestamp="20230524 17:39:06.993" level="INFO">Creating Session using : alias=ServeRest, url=https://serverest.dev, headers={'accept': 'application/json', 'Content-Type': 'application/json'},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<status status="PASS" starttime="20230524 17:39:06.992" endtime="20230524 17:39:06.993"/>
+</kw>
+<status status="PASS" starttime="20230524 17:39:06.992" endtime="20230524 17:39:06.993"/>
+</kw>
+<kw name="POST On Session" library="RequestsLibrary">
+<var>${resposta}</var>
+<arg>alias=ServeRest</arg>
+<arg>url=/usuarios</arg>
+<arg>json=${bory}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<msg timestamp="20230524 17:39:07.419" level="INFO">POST Request : url=https://serverest.dev/usuarios 
+ path_url=/usuarios 
+ headers={'User-Agent': 'python-requests/2.25.1', 'Accept-Encoding': 'gzip, deflate', 'accept': 'application/json', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '106'} 
+ body=b'{"nome": "Tifulano da Silva", "email": "otar@emailteste.com", "password": "1234", "administrador": "true"}' 
+ </msg>
+<msg timestamp="20230524 17:39:07.419" level="INFO">POST Response : url=https://serverest.dev/usuarios 
+ status=201, reason=Created 
+ headers={'access-control-allow-origin': '*', 'x-dns-prefetch-control': 'off', 'x-frame-options': 'SAMEORIGIN', 'strict-transport-security': 'max-age=15552000; includeSubDomains', 'x-download-options': 'noopen', 'x-content-type-options': 'nosniff', 'x-xss-protection': '1; mode=block', 'x-moesif-transaction-id': 'af556f1e-ca25-49d7-a37a-cd990cc25bd1', 'content-type': 'application/json; charset=utf-8', 'X-Cloud-Trace-Context': '27f895450250c6878ca09894309d879d;o=1', 'Date': 'Wed, 24 May 2023 20:39:07 GMT', 'Server': 'Google Frontend', 'Content-Length': '82'} 
+ body={
+    "message": "Cadastro realizado com sucesso",
+    "_id": "qhnLTUihXoQppdFI"
+} 
+ </msg>
+<msg timestamp="20230524 17:39:07.420" level="INFO">/usr/lib/python3/dist-packages/urllib3/connectionpool.py:1015: InsecureRequestWarning: Unverified HTTPS request is being made to host 'serverest.dev'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings
+  warnings.warn(</msg>
+<msg timestamp="20230524 17:39:07.420" level="INFO">${resposta} = &lt;Response [201]&gt;</msg>
+<status status="PASS" starttime="20230524 17:39:06.993" endtime="20230524 17:39:07.420"/>
+</kw>
+<kw name="Log" library="BuiltIn">
+<arg>${resposta.json()}</arg>
+<doc>Logs the given message with the given level.</doc>
+<msg timestamp="20230524 17:39:07.422" level="INFO">{'message': 'Cadastro realizado com sucesso', '_id': 'qhnLTUihXoQppdFI'}</msg>
+<status status="PASS" starttime="20230524 17:39:07.421" endtime="20230524 17:39:07.423"/>
+</kw>
+<status status="PASS" starttime="20230524 17:39:06.991" endtime="20230524 17:39:07.423"/>
+</kw>
+<status status="PASS" starttime="20230524 17:39:06.985" endtime="20230524 17:39:07.424"/>
 </test>
-<status status="PASS" starttime="20230524 16:30:37.990" endtime="20230524 16:30:38.063"/>
+<status status="PASS" starttime="20230524 17:39:06.322" endtime="20230524 17:39:07.425"/>
 </suite>
 <statistics>
 <total>
