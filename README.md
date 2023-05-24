@@ -10,5 +10,17 @@ Aula 1:
  
  **Convert To Lower Case** Converte as letra em maiusculo para minusculo
  
- **Set Test Variable** atribui dados gerados a variavel
+ **Set Test Variable** atribui dados gerados a variavel e torna visivel em todos os testes
+
+ Aula 2: 
  
+ **Create Dictionary** cria dicionarios, onde vc adiciona chave e valor exemplo nome=fulano
+ **Create Session**  criar informações globais que podem ser usada em todos os testes
+ **POST On Session** informa o metodo e tbm os dados da requisição da sessão criada
+
+ Aula 3:
+
+**Dictionary Should Contain Item** Verifica um determinado valor consta na lista 
+**Dictionary Should Contain Key** Verifica se uam determinada da resposta do json está presente no resultado  
+
+
