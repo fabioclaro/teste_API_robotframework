@@ -27,7 +27,12 @@ Cadastrar o usuário criado no ServeRest
    ...    expected_status=${status_code_desejado}
    
    Log    ${resposta.json()} 
-   Set Test Variable    ${RESPOSTA}   ${resposta.json()}  
+
+   IF    ${resposta.status_code} == 201
+         Set Test Variable    ${ID_USUARIO}   ${resposta.json()["_id"]}        
+   END
+   
+   Set Test Variable    ${RESPOSTA}     ${resposta.json()}  
 
 
 Criar sessão na ServeRest
@@ -43,7 +48,18 @@ Vou repetir o cadastro do usuário
     Cadastrar o usuário criado no ServeRest   email=${EMAIL_TEST}   status_code_desejado=400 
 
 Verificar se a API não permitiu o cadastro repetido
-    Dictionary Should Contain Item   ${RESPOSTA}   message    Este email já está sendo usado      
+    Dictionary Should Contain Item   ${RESPOSTA}   message    Este email já está sendo usado
 
+Consultar os dados do novo usuário
+    ${resposta_consulta}  GET On Session   alias=ServeRest   url=/usuarios/${ID_USUARIO}   expected_status=200
+    Set Test Variable    ${RESP_CONSULTA}   ${resposta_consulta.json()}                 
+
+Conferir os dados retornados
+    Log    ${RESP_CONSULTA}
+    Dictionary Should Contain Item    ${RESP_CONSULTA}    nome             Tifulano da Silva
+    Dictionary Should Contain Item    ${RESP_CONSULTA}    email            ${EMAIL_TEST}    
+    Dictionary Should Contain Item    ${RESP_CONSULTA}    password         1234  
+    Dictionary Should Contain Item    ${RESP_CONSULTA}    administrador    true   
+    Dictionary Should Contain Item    ${RESP_CONSULTA}    _id              ${ID_USUARIO}     
 
 

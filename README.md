@@ -32,4 +32,7 @@ Aula 4:
 
 **[Arguments]** Serve para declarar argumentos e ampliar as camadas de teste sem gerar mais linhas de teste 
 
+Aula 5:
 
+**GET On Session** usado para listar os dados do usuario pesquisado pelo ID.
+**IF** usado para criar uma sentença para executar uma determinada validação de booleano 
