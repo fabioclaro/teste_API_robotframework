@@ -20,11 +20,11 @@ Cadastrar o usuário criado no ServeRest
    
    Criar sessão na ServeRest
 
-   ${resposta}   POST On Session
-   ...    alias=ServeRest
-   ...    url=/usuarios
-   ...    json=${bory}
-   ...    expected_status=${status_code_desejado}
+    ${resposta}   POST On Session
+    ...    alias=ServeRest
+    ...    url=/usuarios
+    ...    json=${bory}
+    ...    expected_status=${status_code_desejado}
    
    Log    ${resposta.json()} 
 
@@ -62,4 +62,24 @@ Conferir os dados retornados
     Dictionary Should Contain Item    ${RESP_CONSULTA}    administrador    true   
     Dictionary Should Contain Item    ${RESP_CONSULTA}    _id              ${ID_USUARIO}     
 
+Realizar Login com o usuário
+    ${bory}  Create Dictionary
+    ...   email=${EMAIL_TEST}
+    ...   password=1234
+    
+    Criar sessão na ServeRest
+
+    ${resposta}   POST On Session
+   ...    alias=ServeRest
+   ...    url=/login
+   ...    json=${bory}
+   ...    expected_status=200
+   
+
+   Set Test Variable     ${resposta}    ${resposta.json()}  
+
+ Conferir se o Login ocorreu com sucesso
+    Log    ${resposta}
+    Dictionary Should Contain Item   ${RESPOSTA}   message   Login realizado com sucesso
+    Dictionary Should Contain Key    ${RESPOSTA}   authorization
 
